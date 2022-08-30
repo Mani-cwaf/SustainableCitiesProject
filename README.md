@@ -8,6 +8,6 @@
             A simple city builder game revolving around the topic of sustainable cities for a school project.
         </td>
         <td width="13%">
-            <a href="https://github.com/Mani-cwaf/SustainableCitiesProject/releases/download/v1.1.0/SustainableCitiesProject.zip"><img alt="Download" src="https://github.com/doombubbles/BTD6-Mods/blob/main/download_small.png?raw=true"></a>
+            <a href="https://github.com/Mani-cwaf/SustainableCitiesProject/releases/latest/download/SustainableCitiesProject.zip"><img alt="Download" src="https://github.com/doombubbles/BTD6-Mods/blob/main/download_small.png?raw=true"></a>
         </td>
     </tr>
