@@ -18,7 +18,7 @@
             <h2>Sustainable Cities</h2>
         </td>
         <td>
-            Download (windows).
+            Download.
         </td>
         <td width="13%">
             <a href="https://github.com/Mani-cwaf/SustainableCitiesProject/releases/latest/download/SustainableCitiesProject.zip"><img alt="Download" src="https://github.com/Mani-cwaf/SustainableCitiesProject/blob/main/Project/DownloadIcon.png?raw=true"></a>
