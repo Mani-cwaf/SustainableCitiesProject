@@ -6,7 +6,7 @@
             <h2>Sustainable Cities</h2>
         </td>
         <td>
-            Play online.
+            Play online on itch.io (requires internet, works on all operating systems).
         </td>
         <td width="13%">
             <a href="https://mani-dev101.itch.io/sustainable-cities"><img alt="Play" src="https://github.com/Mani-cwaf/SustainableCitiesProject/blob/main/Project/PlayIcon.png?raw=true"></a>
@@ -18,7 +18,7 @@
             <h2>Sustainable Cities</h2>
         </td>
         <td>
-            Download.
+            Download (windows). to run unzip the file and run the SustainableCities app.
         </td>
         <td width="13%">
             <a href="https://github.com/Mani-cwaf/SustainableCitiesProject/releases/latest/download/SustainableCitiesProject.zip"><img alt="Download" src="https://github.com/Mani-cwaf/SustainableCitiesProject/blob/main/Project/DownloadIcon.png?raw=true"></a>
