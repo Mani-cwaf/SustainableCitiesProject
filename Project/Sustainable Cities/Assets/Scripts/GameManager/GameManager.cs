@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public Text goldDisplay;
     public Text goldCollectDisplay;
+    public Text moralTextDisplay;
     public Text pollutionDisplay;
     public Text energyDisplay;
     public Text treeCostDisplay;
@@ -22,6 +23,13 @@ public class GameManager : MonoBehaviour
     public Text solarPlantCountDisplay;
     public Text coalPlantCountDisplay;
     public CustomCursor customCursor;
+
+    public Sprite moralScaleMad;
+    public Sprite moralScaleSad;
+    public Sprite moralScaleNeutral;
+    public Sprite moralScaleSlightlyHappy;
+    public Sprite moralScaleHappy;
+    public GameObject moralDisplayIcon;
 
     [SerializeField] StatManager statManager;
     [SerializeField] Buttons buttons;
@@ -67,11 +75,37 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        if (statManager.moralModifier >= 50)
+        {
+            moralDisplayIcon.GetComponent<Image>().sprite = moralScaleHappy;
+            moralTextDisplay.color = Color.green;
+        }
+        if (statManager.moralModifier > 0 && statManager.moralModifier < 50)
+        {
+            moralDisplayIcon.GetComponent<Image>().sprite = moralScaleSlightlyHappy;
+            moralTextDisplay.color = new Color(0.4f, 1, 0.4f, 255);
+        }
+        if (statManager.moralModifier == 0)
+        {
+            moralDisplayIcon.GetComponent<Image>().sprite = moralScaleNeutral;
+            moralTextDisplay.color = Color.yellow;
+        }
+        if (statManager.moralModifier < 0)
+        {
+            moralDisplayIcon.GetComponent<Image>().sprite = moralScaleSad;
+            moralTextDisplay.color = new Color(1, 0.4f, 0.4f, 255);
+        }
+        if (statManager.moralModifier <= -50)
+        {
+            moralDisplayIcon.GetComponent<Image>().sprite = moralScaleMad;
+            moralTextDisplay.color = Color.red;
+        }
 
         goldDisplay.text = statManager.Gold.ToString();
         goldCollectDisplay.text = statManager.inCollectionGold.ToString() + " / " + statManager.maxCollectionGold.ToString();
         pollutionDisplay.text = Mathf.Clamp(statManager.pollutionModifier, 0, 9999999).ToString();
         energyDisplay.text = statManager.energyBeingUsed.ToString() + " / " + statManager.energyBeingProvided.ToString();
+        moralTextDisplay.text = statManager.moralModifier.ToString();
 
         treeCostDisplay.text = statManager.treeCost.ToString();
         buildingCostDisplay.text = statManager.buildingCost.ToString();

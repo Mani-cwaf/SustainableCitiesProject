@@ -10,6 +10,7 @@ public class Building : MonoBehaviour
     private StatManager statManager;
     public int houseMaxCollectionsGoldIncrease = 5;
     public float timeBetweenIncreases = 2f;
+    public float timeLeftBetweenIncreases = 2f;
     public int goldIncrease = 1;
     public Tile placedTile;
     public string displayName = "Building";
@@ -20,13 +21,23 @@ public class Building : MonoBehaviour
         statManager = FindObjectOfType<StatManager>();
         statManager.energyBeingUsed++;
         statManager.maxCollectionGold += houseMaxCollectionsGoldIncrease;
-        InvokeRepeating("BuildingTick", 1, timeBetweenIncreases);
+        InvokeRepeating("BuildingTick", 1, 0.1f);
     }
     private void Update()
     {
-        timeBetweenIncreases = (2f + Mathf.Clamp(Mathf.Log(Mathf.Clamp(statManager.pollutionModifier, 0, 99999999), 1.06f) * 0.04f, 1f, 12f)) / (1 + (statManager.moralModifier / 100));
+        timeBetweenIncreases = Mathf.Clamp(2f + (statManager.pollutionModifier - statManager.moralModifier) / 50, 1, 9999999);
     }
     void BuildingTick()
+    {
+        timeLeftBetweenIncreases -= 0.1f;
+        if (timeLeftBetweenIncreases <= 0)
+        {
+            timeLeftBetweenIncreases = timeBetweenIncreases;
+            BuildingMoneyTick();
+        }
+    }
+
+    void BuildingMoneyTick()
     {
         if (buildingEnabled && statManager.inCollectionGold + goldIncrease <= statManager.maxCollectionGold)
         {
