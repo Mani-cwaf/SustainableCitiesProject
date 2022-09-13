@@ -21,6 +21,6 @@
             Download for windows. to run unzip the file and run the SustainableCities app.
         </td>
         <td width="13%">
-            <a href="github.com/Mani-cwaf/SustainableCitiesProject/releases/latest/download/SustainableCitiesProject-Windows.zip"><img alt="Download" src="https://github.com/Mani-cwaf/SustainableCitiesProject/blob/main/Project/DownloadIcon.png?raw=true"></a>
+            <a href="https://github.com/Mani-cwaf/SustainableCitiesProject/releases/latest/download/SustainableCitiesProject-Windows.zip"><img alt="Download" src="https://github.com/Mani-cwaf/SustainableCitiesProject/blob/main/Project/DownloadIcon.png?raw=true"></a>
         </td>
     </tr>
