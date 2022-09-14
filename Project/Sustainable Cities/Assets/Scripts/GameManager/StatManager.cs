@@ -28,7 +28,7 @@ public class StatManager : MonoBehaviour
     public float coalPlantPollutionEffect = 15;
     public float reactorPollutionEffect = 5;
     public float treeMoralEffect = 15;
-    public float reactorMoralEffect = 5;
+    public float reactorMoralEffect = 10;
     public float solarPlantMoralEffect = 5;
-    public float coalPlantMoralEffect = 10;
+    public float coalPlantMoralEffect = 25;
 }

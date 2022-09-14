@@ -9,8 +9,8 @@ public class Building : MonoBehaviour
 {
     private StatManager statManager;
     public int houseMaxCollectionsGoldIncrease = 5;
-    public float timeBetweenIncreases = 2f;
-    public float timeLeftBetweenIncreases = 2f;
+    public float ticksBetweenIncreases = 30;
+    public float ticksLeftBetweenIncrease = 30;
     public int goldIncrease = 1;
     public Tile placedTile;
     public string displayName = "Building";
@@ -25,14 +25,14 @@ public class Building : MonoBehaviour
     }
     private void Update()
     {
-        timeBetweenIncreases = Mathf.Clamp(2f + (statManager.pollutionModifier - statManager.moralModifier) / 50, 1, 9999999);
+        ticksBetweenIncreases = Mathf.Clamp(30f + ((0 - statManager.moralModifier) / 10).ConvertTo<int>(), 10, 9999999);
     }
     void BuildingTick()
     {
-        timeLeftBetweenIncreases -= 0.1f;
-        if (timeLeftBetweenIncreases <= 0)
+        ticksLeftBetweenIncrease -= 1;
+        if (ticksLeftBetweenIncrease <= 0)
         {
-            timeLeftBetweenIncreases = timeBetweenIncreases;
+            ticksLeftBetweenIncrease = ticksBetweenIncreases;
             BuildingMoneyTick();
         }
     }
