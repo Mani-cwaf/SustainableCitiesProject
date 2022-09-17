@@ -11,6 +11,8 @@ public class AnimationsManager : MonoBehaviour
     [SerializeField] private Animator energyAnimator;
     [SerializeField] private StatManager statManager;
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private Sprite buildingEnabled;
+    [SerializeField] private Sprite buildingDisabled;
 
     void Update()
     {
@@ -43,10 +45,17 @@ public class AnimationsManager : MonoBehaviour
             energyAnimator.SetBool("ShowEnergyDepleted", false);
         }
 
-
         pollutionAnimator.speed = Mathf.Clamp(0.05f * Mathf.Log(statManager.pollutionModifier, 1.085f), 0.2f, 4f);
         goldAnimator.speed = Mathf.Clamp(0.02f * Mathf.Log(statManager.Gold, 1.1f), 0.5f, 3f);
         goldControllerAnimator.speed = Mathf.Clamp(0.04f * Mathf.Log(statManager.inCollectionGold, 1.1f), 0.5f, 2f);
         energyAnimator.speed = 1 + Mathf.Clamp(0.1f * Mathf.Log(Mathf.Clamp(statManager.energyBeingUsed - statManager.energyBeingProvided, 1f, 9999999f), 1.1f), 0f, 2.5f);
+    }
+    public void BuildingDisabledAnimation(Building building)
+    {
+        building.gameObject.GetComponent<SpriteRenderer>().sprite = buildingDisabled;
+    }
+    public void BuildingEnabledAnimation(Building building)
+    {
+        building.gameObject.GetComponent<SpriteRenderer>().sprite = buildingEnabled;
     }
 }

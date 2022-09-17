@@ -29,21 +29,24 @@ public class Building : MonoBehaviour
     }
     void BuildingTick()
     {
-        ticksLeftBetweenIncrease -= 1;
-        if (ticksLeftBetweenIncrease <= 0)
+        if (buildingEnabled)
         {
-            ticksLeftBetweenIncrease = ticksBetweenIncreases;
-            BuildingMoneyTick();
+            ticksLeftBetweenIncrease -= 1;
+            if (ticksLeftBetweenIncrease <= 0)
+            {
+                ticksLeftBetweenIncrease = ticksBetweenIncreases;
+                BuildingMoneyTick();
+            }
         }
     }
 
     void BuildingMoneyTick()
     {
-        if (buildingEnabled && statManager.inCollectionGold + goldIncrease <= statManager.maxCollectionGold)
+        if (statManager.inCollectionGold + goldIncrease <= statManager.maxCollectionGold)
         {
             statManager.inCollectionGold += goldIncrease;
         }
-        else if (buildingEnabled)
+        else
         {
             int difference = statManager.maxCollectionGold - statManager.inCollectionGold;
             if (difference < goldIncrease)

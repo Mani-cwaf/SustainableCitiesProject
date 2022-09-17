@@ -32,46 +32,47 @@ public class GameManager : MonoBehaviour
     public GameObject moralDisplayIcon;
 
     [SerializeField] StatManager statManager;
+    [SerializeField] AnimationsManager animationsManager;
     [SerializeField] Buttons buttons;
     [SerializeField] GenerateTiles generateTiles;
 
     [HideInInspector] public List<Tree> trees;
-
-    [HideInInspector] public List<Building> buildings;
-
+     public List<Building> buildings;
     [HideInInspector] public List<Reactor> reactors;
-
     [HideInInspector] public List<SolarPlant> solarPlants;
-
     [HideInInspector] public List<CoalPlant> coalPlants;
-    
+  
     [HideInInspector] public Tree treeToPlace;
-
     [HideInInspector] public Building buildingToPlace;
-
     [HideInInspector] public Reactor reactorToPlace;
-
     [HideInInspector] public SolarPlant solarPlantToPlace;
-
     [HideInInspector] public CoalPlant coalPlantToPlace;
 
     public Tile[] tiles = new Tile[]{};
 
     public void Update()
     {
-        while (statManager.energyBeingUsed > statManager.energyBeingProvided)
-        {
-            buildings.Last(building => building.buildingEnabled).buildingEnabled = false;
-            statManager.energyBeingUsed--;
-        }
         foreach (Building building in buildings)
         {
-            if (!building.buildingEnabled)
+            if (building)
             {
-                if (statManager.energyBeingUsed < statManager.energyBeingProvided)
+                if (!building.buildingEnabled)
                 {
-                    building.buildingEnabled = true;
-                    statManager.energyBeingUsed++;
+                    if (statManager.energyBeingUsed <= statManager.energyBeingProvided)
+                    {
+                        building.buildingEnabled = true;
+                        statManager.energyBeingUsed++;
+                        animationsManager.BuildingEnabledAnimation(building);
+                    }
+                }
+                if (building.buildingEnabled)
+                {
+                    if (statManager.energyBeingProvided < statManager.energyBeingUsed)
+                    {
+                        building.buildingEnabled = false;
+                        statManager.energyBeingUsed--;
+                        animationsManager.BuildingDisabledAnimation(building);
+                    }
                 }
             }
         }
@@ -149,29 +150,27 @@ public class GameManager : MonoBehaviour
                 nearestTile = tile;
             }
         }
-        if (nearestTile.isOccupied)
+        if (nearestTile && !nearestTile.isOccupied && shortestDistance < 2)
         {
-            return;
-        }
-        Vector3 positionToPlace = nearestTile.transform.position;
-        var placedTree = Instantiate(treeToPlace, positionToPlace, Quaternion.identity);
-        nearestTile.currentTree = placedTree;
-        placedTree.placedTile = nearestTile;
-        nearestTile.isOccupied = true;
-        treeToPlace = null;
-        customCursor.gameObject.SetActive(false);
-        Cursor.visible = true;
-        buttons.isPlacing = false;
-        if (buttons.isMoving)
-        {
-            buttons.isMoving = false;
-            buttons.isMoved = true;
-            buttons.FinishTreeMove();
-            buttons.buildingInMovement = "";
-        }
-        else
-        {
-            statManager.treeCount--;
+            Vector3 positionToPlace = nearestTile.transform.position;
+            var placedTree = Instantiate(treeToPlace, positionToPlace, Quaternion.identity);
+            nearestTile.currentTree = placedTree;
+            placedTree.placedTile = nearestTile;
+            nearestTile.isOccupied = true;
+            treeToPlace = null;
+            customCursor.gameObject.SetActive(false);
+            Cursor.visible = true;
+            buttons.isPlacing = false;
+            if (buttons.isMoving)
+            {
+                buttons.isMoving = false;
+                buttons.FinishTreeMove();
+                buttons.buildingInMovement = "";
+            }
+            else
+            {
+                statManager.treeCount--;
+            }
         }
     } 
     public void DetectPlaceBuilding()
@@ -191,7 +190,7 @@ public class GameManager : MonoBehaviour
                 nearestTile = tile;
             }
         }
-        if (!nearestTile.isOccupied)
+        if (nearestTile && !nearestTile.isOccupied && shortestDistance < 2)
         {
             Vector3 positionToPlace = nearestTile.transform.position;
             var placedBuilding = Instantiate(buildingToPlace, positionToPlace, Quaternion.identity);
@@ -202,11 +201,10 @@ public class GameManager : MonoBehaviour
             customCursor.gameObject.SetActive(false);
             Cursor.visible = true;
             buttons.isPlacing = false;
-            buildings.Add(placedBuilding);
+            buildings.Insert(0, placedBuilding);
             if (buttons.isMoving)
             {
                 buttons.isMoving = false;
-                buttons.isMoved = true;
                 buttons.FinishBuildingMove();
                 buttons.buildingInMovement = "";
             }
@@ -240,7 +238,7 @@ public class GameManager : MonoBehaviour
         Tile nearestTileX1 = generateTiles.TilePosesInverse.GetValueOrDefault(nearestTileX1Index);
         Tile nearestTileY1 = generateTiles.TilePosesInverse.GetValueOrDefault(nearestTileY1Index);
         Tile nearestTileXY1 = generateTiles.TilePosesInverse.GetValueOrDefault(nearestTileXY1Index);
-        if (!nearestTile.isOccupied && !nearestTileX1.isOccupied && !nearestTileY1.isOccupied && !nearestTileXY1.isOccupied)
+        if (nearestTile && nearestTileX1 && nearestTileY1 && nearestTileXY1 && !nearestTile.isOccupied && !nearestTileX1.isOccupied && !nearestTileY1.isOccupied && !nearestTileXY1.isOccupied && shortestDistance < 2)
         {
             Vector3 positionToPlace = nearestTile.transform.position;
             var placedReactor = Instantiate(reactorToPlace, positionToPlace, Quaternion.identity);
@@ -263,7 +261,6 @@ public class GameManager : MonoBehaviour
             if (buttons.isMoving)
             {
                 buttons.isMoving = false;
-                buttons.isMoved = true;
                 buttons.FinishReactorMove();
                 buttons.buildingInMovement = "";
             }
@@ -290,7 +287,7 @@ public class GameManager : MonoBehaviour
                 nearestTile = tile;
             }
         }
-        if (!nearestTile.isOccupied)
+        if (nearestTile && !nearestTile.isOccupied && shortestDistance < 2)
         {
             Vector3 positionToPlace = nearestTile.transform.position;
             positionToPlace.x += 0.1f;
@@ -305,7 +302,6 @@ public class GameManager : MonoBehaviour
             if (buttons.isMoving)
             {
                 buttons.isMoving = false;
-                buttons.isMoved = true;
                 buttons.FinishSolarPlantMove();
                 buttons.buildingInMovement = "";
             }
@@ -332,7 +328,7 @@ public class GameManager : MonoBehaviour
                 nearestTile = tile;
             }
         }
-        if (!nearestTile.isOccupied)
+        if (!nearestTile.isOccupied && !nearestTile.isOccupied && shortestDistance < 2)
         {
             Vector3 positionToPlace = nearestTile.transform.position;
             positionToPlace.x += 0.1f;
@@ -347,7 +343,6 @@ public class GameManager : MonoBehaviour
             if (buttons.isMoving)
             {
                 buttons.isMoving = false;
-                buttons.isMoved = true;
                 buttons.FinishCoalPlantMove();
                 buttons.buildingInMovement = "";
             }

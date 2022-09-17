@@ -11,7 +11,7 @@ public class StatManager : MonoBehaviour
     public int buildingCost = 25;
     public int solarPlantCost = 35;
     public int coalPlantCost = 20;
-    public int reactorCost = 105;
+    public int reactorCost = 120;
     public int treeCount;
     public int buildingCount;
     public int solarPlantCount;
@@ -22,13 +22,13 @@ public class StatManager : MonoBehaviour
     public int energyBeingProvided;
     public int coalPlantEnergyBeingProvided = 2;
     public int solarPlantEnergyBeingProvided = 3;
-    public int reactorEnergyBeingProvided = 10;
+    public int reactorEnergyBeingProvided = 15;
     public float moralModifier;
     public float pollutionModifier;
     public float coalPlantPollutionEffect = 15;
-    public float reactorPollutionEffect = 5;
+    public float reactorPollutionEffect = 10;
     public float treeMoralEffect = 15;
-    public float reactorMoralEffect = 10;
+    public float reactorMoralEffect = 15;
     public float solarPlantMoralEffect = 5;
     public float coalPlantMoralEffect = 25;
 }
