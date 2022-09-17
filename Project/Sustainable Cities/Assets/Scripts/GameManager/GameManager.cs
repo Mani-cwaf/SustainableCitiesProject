@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
     }
     public void PlaceStuff()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             DetectPlaceTree();
             DetectPlaceBuilding();
@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
             if (buttons.isMoving)
             {
                 buttons.isMoving = false;
-                buttons.FinishTreeMove();
+                buttons.Invoke(nameof(buttons.FinishTreeMove), 0.1f);
                 buttons.buildingInMovement = "";
             }
             else
@@ -205,7 +205,7 @@ public class GameManager : MonoBehaviour
             if (buttons.isMoving)
             {
                 buttons.isMoving = false;
-                buttons.FinishBuildingMove();
+                buttons.Invoke(nameof(buttons.FinishBuildingMove), 0.1f);
                 buttons.buildingInMovement = "";
             }
             else
@@ -261,7 +261,7 @@ public class GameManager : MonoBehaviour
             if (buttons.isMoving)
             {
                 buttons.isMoving = false;
-                buttons.FinishReactorMove();
+                buttons.Invoke(nameof(buttons.FinishReactorMove), 0.1f);
                 buttons.buildingInMovement = "";
             }
             else
@@ -302,7 +302,7 @@ public class GameManager : MonoBehaviour
             if (buttons.isMoving)
             {
                 buttons.isMoving = false;
-                buttons.FinishSolarPlantMove();
+                buttons.Invoke(nameof(buttons.FinishSolarPlantMove), 0.1f);
                 buttons.buildingInMovement = "";
             }
             else
@@ -343,7 +343,7 @@ public class GameManager : MonoBehaviour
             if (buttons.isMoving)
             {
                 buttons.isMoving = false;
-                buttons.FinishCoalPlantMove();
+                buttons.Invoke(nameof(buttons.FinishCoalPlantMove), 0.1f);
                 buttons.buildingInMovement = "";
             }
             else

@@ -363,7 +363,7 @@ public class Buttons : MonoBehaviour
     }
     public void SelectTree(Tree tree)
     {
-        if (!isPlacing)
+        if (!isPlacing && !isSelected)
         {
             isSelected = true;
             Invoke(nameof(SelectTreeCoRoutine), 0.1f);
@@ -379,6 +379,7 @@ public class Buttons : MonoBehaviour
         Destroy(selectedTree.gameObject);
         selectedTree = null;
         selectMenu.SetActive(false);
+        isSelected = false;
     }
     public void FinishTreeMove()
     {
@@ -387,7 +388,7 @@ public class Buttons : MonoBehaviour
     }
     public void SelectBuilding(Building building)
     {
-        if (!isPlacing)
+        if (!isPlacing && !isSelected)
         {
             isSelected = true;
             Invoke(nameof(SelectBuildingCoRoutine), 0.1f);
@@ -404,6 +405,7 @@ public class Buttons : MonoBehaviour
         Destroy(selectedBuilding.gameObject);
         selectedBuilding = null;
         selectMenu.SetActive(false);
+        isSelected = false;
     }
     public void FinishBuildingMove()
     {
@@ -412,7 +414,7 @@ public class Buttons : MonoBehaviour
     }
     public void SelectReactor(Reactor reactor)
     {
-        if (!isPlacing)
+        if (!isPlacing && !isSelected)
         {
             isSelected = true;
             Invoke(nameof(SelectReactorCoRoutine), 0.1f);
@@ -432,6 +434,7 @@ public class Buttons : MonoBehaviour
         Destroy(selectedReactor.gameObject);
         selectedReactor = null;
         selectMenu.SetActive(false);
+        isSelected = false;
     }
     public void FinishReactorMove()
     {
@@ -440,7 +443,7 @@ public class Buttons : MonoBehaviour
     }
     public void SelectSolarPlant(SolarPlant solarPlant)
     {
-        if (!isPlacing)
+        if (!isPlacing && !isSelected)
         {
             isSelected = true;
             Invoke(nameof(SelectSolarPlantCoRoutine), 0.1f);
@@ -456,6 +459,7 @@ public class Buttons : MonoBehaviour
         Destroy(selectedSolarPlant.gameObject);
         selectedSolarPlant = null;
         selectMenu.SetActive(false);
+        isSelected = false;
     }
     public void FinishSolarPlantMove()
     {
@@ -464,7 +468,7 @@ public class Buttons : MonoBehaviour
     }
     public void SelectCoalPlant(CoalPlant coalPlant)
     {
-        if (!isPlacing)
+        if (!isPlacing && !isSelected)
         {
             isSelected = true;
             Invoke(nameof(SelectCoalPlantCoRoutine), 0.1f);
@@ -481,6 +485,7 @@ public class Buttons : MonoBehaviour
         Destroy(selectedCoalPlant.gameObject);
         selectedCoalPlant = null;
         selectMenu.SetActive(false);
+        isSelected = false;
     }
     public void FinishCoalPlantMove()
     {
@@ -553,23 +558,23 @@ public class Buttons : MonoBehaviour
         {
             RemoveSelection();
         }
-        if (Input.GetKeyDown(KeyCode.T) && !isRenaming)
+        if (Input.GetKey(KeyCode.T) && !isRenaming)
         {
             PlaceTree(treePrefab);
         }
-        if (Input.GetKeyDown(KeyCode.B) && !isRenaming)
+        if (Input.GetKey(KeyCode.B) && !isRenaming)
         {
             PlaceBuilding(buildingPrefab);
         }
-        if (Input.GetKeyDown(KeyCode.R) && !isRenaming)
+        if (Input.GetKey(KeyCode.R) && !isRenaming)
         {
             PlaceReactor(reactorPrefab);
         }
-        if (Input.GetKeyDown(KeyCode.S) && !isRenaming)
+        if (Input.GetKey(KeyCode.S) && !isRenaming)
         {
             PlaceSolarPlant(solarPlantPrefab);
         }
-        if (Input.GetKeyDown(KeyCode.C) && !isRenaming)
+        if (Input.GetKey(KeyCode.C) && !isRenaming)
         {
             PlaceCoalPlant(coalPlantPrefab);
         }
