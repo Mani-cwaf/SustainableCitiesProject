@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +18,7 @@ public class Buttons : MonoBehaviour
     public GameObject mainMenu;
 
     public Tree treePrefab;
-    public Building buildingPrefab;
+    public House housePrefab;
     public Reactor reactorPrefab;
     public SolarPlant solarPlantPrefab;
     public CoalPlant coalPlantPrefab;
@@ -29,7 +27,7 @@ public class Buttons : MonoBehaviour
     [SerializeField] GameObject renameMenu;
     [SerializeField] TMP_InputField renameMenuText;
     [HideInInspector] public Tree selectedTree;
-    [HideInInspector] public Building selectedBuilding;
+    [HideInInspector] public House selectedHouse;
     [HideInInspector] public Reactor selectedReactor;
     [HideInInspector] public CoalPlant selectedCoalPlant;
     [HideInInspector] public SolarPlant selectedSolarPlant;
@@ -41,7 +39,7 @@ public class Buttons : MonoBehaviour
     [HideInInspector] public bool isPlacing;
     [HideInInspector] public bool isMoving;
 
-    public string buildingInMovement;
+    public string houseInMovement;
 
     public string sceneName = "city";
     public void Start()
@@ -69,11 +67,11 @@ public class Buttons : MonoBehaviour
             isPlacing = false;
         }
     }
-    public void CancelBuildingPlace()
+    public void CancelHousePlace()
     {
-        if (gameManager.buildingToPlace != null)
+        if (gameManager.houseToPlace != null)
         {
-            gameManager.buildingToPlace = null;
+            gameManager.houseToPlace = null;
             gameManager.customCursor.gameObject.SetActive(false);
             Cursor.visible = true;
             isPlacing = false;
@@ -117,12 +115,12 @@ public class Buttons : MonoBehaviour
             statManager.treeCount++;
         }
     }
-    public void BuyBuilding()
+    public void BuyHouse()
     {
-        if (statManager.Gold >= statManager.buildingCost)
+        if (statManager.Gold >= statManager.houseCost)
         {
-            statManager.Gold -= statManager.buildingCost;
-            statManager.buildingCount++;
+            statManager.Gold -= statManager.houseCost;
+            statManager.houseCount++;
         }
     }
     public void BuyReactor()
@@ -157,12 +155,12 @@ public class Buttons : MonoBehaviour
             selectedTree.displayName = renameMenuText.textComponent.text;
         }
     }
-    public void RenameBuildingFinish()
+    public void RenameHouseFinish()
     {
         if (sceneName == "city" && isSelected)
         {
             renameMenu.SetActive(false);
-            selectedBuilding.displayName = renameMenuText.textComponent.text;
+            selectedHouse.displayName = renameMenuText.textComponent.text;
         }
     }
     public void RenameReactorFinish()
@@ -178,7 +176,7 @@ public class Buttons : MonoBehaviour
         if (sceneName == "city" && isSelected)
         {
             renameMenu.SetActive(false);
-            selectedBuilding.displayName = renameMenuText.textComponent.text;
+            selectedHouse.displayName = renameMenuText.textComponent.text;
         }
     }
     public void RenameCoalPlantFinish()
@@ -204,17 +202,17 @@ public class Buttons : MonoBehaviour
             }
         }
     }
-    public void PlaceBuilding(Building building)
+    public void PlaceHouse(House house)
     {
         if (sceneName == "city")
         {
-            if (statManager.buildingCount > 0  && !gameManager.buildingToPlace)
+            if (statManager.houseCount > 0  && !gameManager.houseToPlace)
             {
                 isPlacing = true;
-                gameManager.buildingToPlace = building;
+                gameManager.houseToPlace = house;
                 gameManager.customCursor.gameObject.SetActive(true);
                 gameManager.customCursor.transform.localScale = new Vector3(0.35f, 0.35f);
-                gameManager.customCursor.GetComponent<SpriteRenderer>().sprite = building.GetComponent<SpriteRenderer>().sprite;
+                gameManager.customCursor.GetComponent<SpriteRenderer>().sprite = house.GetComponent<SpriteRenderer>().sprite;
                 Cursor.visible = false;
             }
         }
@@ -278,16 +276,16 @@ public class Buttons : MonoBehaviour
             isMoving = true;
         }
     }
-    void MoveBuilding()
+    void MoveHouse()
     {
         if (sceneName == "city")
         {
             selectMenu.SetActive(false);
             isPlacing = true;
-            gameManager.buildingToPlace = selectedBuilding;
+            gameManager.houseToPlace = selectedHouse;
             gameManager.customCursor.gameObject.SetActive(true);
             gameManager.customCursor.transform.localScale = new Vector3(0.35f, 0.35f);
-            gameManager.customCursor.GetComponent<SpriteRenderer>().sprite = selectedBuilding.GetComponent<SpriteRenderer>().sprite;
+            gameManager.customCursor.GetComponent<SpriteRenderer>().sprite = selectedHouse.GetComponent<SpriteRenderer>().sprite;
             Cursor.visible = false;
             isMoving = true;
         }
@@ -386,31 +384,31 @@ public class Buttons : MonoBehaviour
         statManager.Gold -= statManager.treeCost;
         SellTree();
     }
-    public void SelectBuilding(Building building)
+    public void SelectHouse(House house)
     {
         if (!isPlacing && !isSelected)
         {
             isSelected = true;
-            Invoke(nameof(SelectBuildingCoRoutine), 0.1f);
-            selectedBuilding = building;
+            Invoke(nameof(SelectHouseCoRoutine), 0.1f);
+            selectedHouse = house;
         }
     }
-    public void SellBuilding()
+    public void SellHouse()
     {
-        if (selectedBuilding.buildingEnabled) statManager.energyBeingUsed--;
-        statManager.maxCollectionGold -= selectedBuilding.houseMaxCollectionsGoldIncrease;
-        statManager.Gold += statManager.buildingCost;
-        selectedBuilding.placedTile.isOccupied = false;
-        gameManager.buildings.Remove(selectedBuilding);
-        Destroy(selectedBuilding.gameObject);
-        selectedBuilding = null;
+        if (selectedHouse.houseEnabled) statManager.energyBeingUsed--;
+        statManager.maxCollectionGold -= selectedHouse.houseMaxCollectionsGoldIncrease;
+        statManager.Gold += statManager.houseCost;
+        selectedHouse.placedTile.isOccupied = false;
+        gameManager.houses.Remove(selectedHouse);
+        Destroy(selectedHouse.gameObject);
+        selectedHouse = null;
         selectMenu.SetActive(false);
         isSelected = false;
     }
-    public void FinishBuildingMove()
+    public void FinishHouseMove()
     {
-        statManager.Gold -= statManager.buildingCost;
-        SellBuilding();
+        statManager.Gold -= statManager.houseCost;
+        SellHouse();
     }
     public void SelectReactor(Reactor reactor)
     {
@@ -504,9 +502,9 @@ public class Buttons : MonoBehaviour
         {
             MoveTree();
         }
-        if (selectedBuilding)
+        if (selectedHouse)
         {
-            MoveBuilding();
+            MoveHouse();
         }
         if (selectedReactor)
         {
@@ -527,9 +525,9 @@ public class Buttons : MonoBehaviour
         {
             SellTree();
         }
-        if (selectedBuilding)
+        if (selectedHouse)
         {
-            SellBuilding();
+            SellHouse();
         }
         if (selectedReactor)
         {
@@ -564,7 +562,7 @@ public class Buttons : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.B) && !isRenaming)
         {
-            PlaceBuilding(buildingPrefab);
+            PlaceHouse(housePrefab);
         }
         if (Input.GetKey(KeyCode.R) && !isRenaming)
         {
@@ -582,9 +580,9 @@ public class Buttons : MonoBehaviour
         {
             RenameTreeFinish();
         }
-        if (Input.GetKeyDown(KeyCode.Return) && !isPlacing && !isMoving && isRenaming && selectedBuilding)
+        if (Input.GetKeyDown(KeyCode.Return) && !isPlacing && !isMoving && isRenaming && selectedHouse)
         {
-            RenameBuildingFinish();
+            RenameHouseFinish();
         }
         if (Input.GetKeyDown(KeyCode.Return) && !isPlacing && !isMoving && isRenaming && selectedReactor)
         {
@@ -600,7 +598,7 @@ public class Buttons : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape) && (!isSelected && isPlacing || (isSelected && isMoving)))
         {
-            CancelBuildingPlace();
+            CancelHousePlace();
         }
         if (Input.GetKeyDown(KeyCode.Escape) && (!isSelected && isPlacing || (isSelected && isMoving)))
         {
@@ -618,9 +616,9 @@ public class Buttons : MonoBehaviour
         {
             editText.text = "Selected " + selectedTree.displayName;
         }
-        if (selectedBuilding != null)
+        if (selectedHouse != null)
         {
-            editText.text = "Selected " + selectedBuilding.displayName;
+            editText.text = "Selected " + selectedHouse.displayName;
         }
         if (selectedReactor != null)
         {
@@ -639,7 +637,7 @@ public class Buttons : MonoBehaviour
     {
         selectMenu.SetActive(true);
     }
-    void SelectBuildingCoRoutine()
+    void SelectHouseCoRoutine()
     {
         selectMenu.SetActive(true);
     }

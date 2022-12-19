@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -11,8 +9,8 @@ public class AnimationsManager : MonoBehaviour
     [SerializeField] private Animator energyAnimator;
     [SerializeField] private StatManager statManager;
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private Sprite buildingEnabled;
-    [SerializeField] private Sprite buildingDisabled;
+    [SerializeField] private Sprite houseEnabled;
+    [SerializeField] private Sprite houseDisabled;
 
     void Update()
     {
@@ -36,7 +34,7 @@ public class AnimationsManager : MonoBehaviour
         }
 
 
-        if (gameManager.buildings.Any(building => !building.buildingEnabled))
+        if (gameManager.houses.Any(house => !house.houseEnabled))
         {
             energyAnimator.SetBool("ShowEnergyDepleted", true);
         }
@@ -50,12 +48,12 @@ public class AnimationsManager : MonoBehaviour
         goldControllerAnimator.speed = Mathf.Clamp(0.04f * Mathf.Log(statManager.inCollectionGold, 1.1f), 0.5f, 2f);
         energyAnimator.speed = 1 + Mathf.Clamp(0.1f * Mathf.Log(Mathf.Clamp(statManager.energyBeingUsed - statManager.energyBeingProvided, 1f, 9999999f), 1.1f), 0f, 2.5f);
     }
-    public void BuildingDisabledAnimation(Building building)
+    public void HouseDisabledAnimation(House house)
     {
-        building.gameObject.GetComponent<SpriteRenderer>().sprite = buildingDisabled;
+        house.gameObject.GetComponent<SpriteRenderer>().sprite = houseDisabled;
     }
-    public void BuildingEnabledAnimation(Building building)
+    public void HouseEnabledAnimation(House house)
     {
-        building.gameObject.GetComponent<SpriteRenderer>().sprite = buildingEnabled;
+        house.gameObject.GetComponent<SpriteRenderer>().sprite = houseEnabled;
     }
 }

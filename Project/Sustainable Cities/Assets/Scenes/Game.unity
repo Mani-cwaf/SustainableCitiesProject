@@ -144,7 +144,7 @@ GameObject:
   m_IsActive: 1
 --- !u!95 &3339976
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -161,7 +161,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!222 &3339977
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1175,7 +1175,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 917852119}
         m_TargetAssemblyTypeName: Buttons, Assembly-CSharp
-        m_MethodName: BuyBuilding
+        m_MethodName: BuyHouse
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1321,7 +1321,7 @@ MonoBehaviour:
         m_CallState: 2
 --- !u!95 &196727492
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1338,7 +1338,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &196727493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4578,11 +4578,11 @@ MonoBehaviour:
   pollutionDisplay: {fileID: 1262228924}
   energyDisplay: {fileID: 306211197}
   treeCostDisplay: {fileID: 1397454151}
-  buildingCostDisplay: {fileID: 1123780349}
+  houseCostDisplay: {fileID: 1123780349}
   reactorCostDisplay: {fileID: 916834218}
   solarPlantCostDisplay: {fileID: 366993083}
   coalPlantCostDisplay: {fileID: 1733039138}
-  buildingCountDisplay: {fileID: 2087983773}
+  houseCountDisplay: {fileID: 2087983773}
   treeCountDisplay: {fileID: 21844572}
   reactorCountDisplay: {fileID: 1974543680}
   solarPlantCountDisplay: {fileID: 1928455255}
@@ -4600,12 +4600,12 @@ MonoBehaviour:
   buttons: {fileID: 917852119}
   generateTiles: {fileID: 917852115}
   trees: []
-  buildings: []
+  houses: []
   reactors: []
   solarPlants: []
   coalPlants: []
   treeToPlace: {fileID: 0}
-  buildingToPlace: {fileID: 0}
+  houseToPlace: {fileID: 0}
   reactorToPlace: {fileID: 0}
   solarPlantToPlace: {fileID: 0}
   coalPlantToPlace: {fileID: 0}
@@ -4661,8 +4661,8 @@ MonoBehaviour:
   energyAnimator: {fileID: 1745097059}
   statManager: {fileID: 917852120}
   gameManager: {fileID: 917852113}
-  buildingEnabled: {fileID: 21300000, guid: be3ba1f1140ea7e49965e10a4ba743a6, type: 3}
-  buildingDisabled: {fileID: 21300000, guid: 755b02f3026095c4c89bf597a4a42be6, type: 3}
+  houseEnabled: {fileID: 21300000, guid: be3ba1f1140ea7e49965e10a4ba743a6, type: 3}
+  houseDisabled: {fileID: 21300000, guid: 755b02f3026095c4c89bf597a4a42be6, type: 3}
 --- !u!114 &917852119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4695,7 +4695,7 @@ MonoBehaviour:
   mainMenu: {fileID: 1818317996}
   treePrefab: {fileID: 1883161587322727709, guid: 7981696b26d14a04999d132c9c442a02,
     type: 3}
-  buildingPrefab: {fileID: 7232803804727215076, guid: 4b5abc17db17d6a4ab838de90c5a26b1,
+  housePrefab: {fileID: 7232803804727215076, guid: 4b5abc17db17d6a4ab838de90c5a26b1,
     type: 3}
   reactorPrefab: {fileID: 337452307247390649, guid: c8371226aee1f72428a78a0d69bc32f9,
     type: 3}
@@ -4707,7 +4707,7 @@ MonoBehaviour:
   renameMenu: {fileID: 484964640}
   renameMenuText: {fileID: 742292145}
   selectedTree: {fileID: 0}
-  selectedBuilding: {fileID: 0}
+  selectedHouse: {fileID: 0}
   selectedReactor: {fileID: 0}
   selectedCoalPlant: {fileID: 0}
   selectedSolarPlant: {fileID: 0}
@@ -4716,7 +4716,7 @@ MonoBehaviour:
   isRenaming: 0
   isPlacing: 0
   isMoving: 0
-  buildingInMovement: 
+  houseInMovement: 
   sceneName: city
 --- !u!114 &917852120
 MonoBehaviour:
@@ -4734,17 +4734,17 @@ MonoBehaviour:
   maxCollectionGold: 50
   inCollectionGold: 0
   treeCost: 10
-  buildingCost: 25
+  houseCost: 25
   solarPlantCost: 35
   coalPlantCost: 20
   reactorCost: 120
   treeCount: 0
-  buildingCount: 0
+  houseCount: 0
   solarPlantCount: 0
   coalPlantCount: 0
   reactorCount: 0
   energyBeingUsed: 0
-  buildingEnergyBeingUsed: 1
+  houseEnergyBeingUsed: 1
   energyBeingProvided: 0
   coalPlantEnergyBeingProvided: 2
   solarPlantEnergyBeingProvided: 3
@@ -6478,12 +6478,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 917852119}
         m_TargetAssemblyTypeName: Buttons, Assembly-CSharp
-        m_MethodName: PlaceBuilding
+        m_MethodName: PlaceHouse
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 7232803804727215076, guid: 4b5abc17db17d6a4ab838de90c5a26b1,
             type: 3}
-          m_ObjectArgumentAssemblyTypeName: Building, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: House, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7988,7 +7988,7 @@ RectTransform:
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1709937198
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8005,7 +8005,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &1709937199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8422,7 +8422,7 @@ RectTransform:
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1745097059
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8439,7 +8439,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &1745097060
 MonoBehaviour:
   m_ObjectHideFlags: 0

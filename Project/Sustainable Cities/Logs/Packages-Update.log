@@ -108,3 +108,12 @@ The following packages were added:
   com.unity.timeline@1.6.4
   com.unity.ugui@1.0.0
   com.unity.visualscripting@1.7.8
+
+=== Fri Dec 16 22:51:18 2022
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.collab-proxy from version 1.17.2 to 1.17.7
+  com.unity.ide.rider from version 3.0.15 to 3.0.16

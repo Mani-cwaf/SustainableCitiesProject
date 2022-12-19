@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StatManager : MonoBehaviour
@@ -8,17 +6,17 @@ public class StatManager : MonoBehaviour
     public int maxCollectionGold = 50;
     public int inCollectionGold = 0;
     public int treeCost = 10;
-    public int buildingCost = 25;
+    public int houseCost = 25;
     public int solarPlantCost = 35;
     public int coalPlantCost = 20;
     public int reactorCost = 120;
     public int treeCount;
-    public int buildingCount;
+    public int houseCount;
     public int solarPlantCount;
     public int coalPlantCount;
     public int reactorCount;
     public int energyBeingUsed;
-    public int buildingEnergyBeingUsed = 1;
+    public int houseEnergyBeingUsed = 1;
     public int energyBeingProvided;
     public int coalPlantEnergyBeingProvided = 2;
     public int solarPlantEnergyBeingProvided = 3;

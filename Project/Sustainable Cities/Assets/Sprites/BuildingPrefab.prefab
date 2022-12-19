@@ -95,11 +95,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3669208782874640624}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5987342ee83eaa840b395929ba700ce2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a446164338d7c84b9ae4992fcd4d4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenIncreases: 2
+  houseMaxCollectionsGoldIncrease: 5
+  ticksBetweenIncreases: 30
+  ticksLeftBetweenIncrease: 30
   goldIncrease: 1
+  placedTile: {fileID: 0}
+  displayName: House
+  houseEnabled: 1
 --- !u!114 &1256377743
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,9 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
-using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,11 +10,11 @@ public class GameManager : MonoBehaviour
     public Text pollutionDisplay;
     public Text energyDisplay;
     public Text treeCostDisplay;
-    public Text buildingCostDisplay;
+    public Text houseCostDisplay;
     public Text reactorCostDisplay;
     public Text solarPlantCostDisplay;
     public Text coalPlantCostDisplay;
-    public Text buildingCountDisplay;
+    public Text houseCountDisplay;
     public Text treeCountDisplay;
     public Text reactorCountDisplay;
     public Text solarPlantCountDisplay;
@@ -37,41 +34,41 @@ public class GameManager : MonoBehaviour
     [SerializeField] GenerateTiles generateTiles;
 
     [HideInInspector] public List<Tree> trees;
-     public List<Building> buildings;
+    public List<House> houses;
     [HideInInspector] public List<Reactor> reactors;
     [HideInInspector] public List<SolarPlant> solarPlants;
     [HideInInspector] public List<CoalPlant> coalPlants;
-  
+
     [HideInInspector] public Tree treeToPlace;
-    [HideInInspector] public Building buildingToPlace;
+    [HideInInspector] public House houseToPlace;
     [HideInInspector] public Reactor reactorToPlace;
     [HideInInspector] public SolarPlant solarPlantToPlace;
     [HideInInspector] public CoalPlant coalPlantToPlace;
 
-    public Tile[] tiles = new Tile[]{};
+    public Tile[] tiles = new Tile[] { };
 
     public void Update()
     {
-        foreach (Building building in buildings)
+        foreach (House House in houses)
         {
-            if (building)
+            if (House)
             {
-                if (!building.buildingEnabled)
+                if (!House.houseEnabled)
                 {
                     if (statManager.energyBeingUsed <= statManager.energyBeingProvided)
                     {
-                        building.buildingEnabled = true;
+                        House.houseEnabled = true;
                         statManager.energyBeingUsed++;
-                        animationsManager.BuildingEnabledAnimation(building);
+                        animationsManager.HouseEnabledAnimation(House);
                     }
                 }
-                if (building.buildingEnabled)
+                if (House.houseEnabled)
                 {
                     if (statManager.energyBeingProvided < statManager.energyBeingUsed)
                     {
-                        building.buildingEnabled = false;
+                        House.houseEnabled = false;
                         statManager.energyBeingUsed--;
-                        animationsManager.BuildingDisabledAnimation(building);
+                        animationsManager.HouseDisabledAnimation(House);
                     }
                 }
             }
@@ -109,13 +106,13 @@ public class GameManager : MonoBehaviour
         moralTextDisplay.text = statManager.moralModifier.ToString();
 
         treeCostDisplay.text = statManager.treeCost.ToString();
-        buildingCostDisplay.text = statManager.buildingCost.ToString();
+        houseCostDisplay.text = statManager.houseCost.ToString();
         reactorCostDisplay.text = statManager.reactorCost.ToString();
         solarPlantCostDisplay.text = statManager.solarPlantCost.ToString();
         coalPlantCostDisplay.text = statManager.coalPlantCost.ToString();
 
         treeCountDisplay.text = statManager.treeCount.ToString();
-        buildingCountDisplay.text = statManager.buildingCount.ToString();
+        houseCountDisplay.text = statManager.houseCount.ToString();
         reactorCountDisplay.text = statManager.reactorCount.ToString();
         solarPlantCountDisplay.text = statManager.solarPlantCount.ToString();
         coalPlantCountDisplay.text = statManager.coalPlantCount.ToString();
@@ -127,7 +124,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             DetectPlaceTree();
-            DetectPlaceBuilding();
+            DetectPlaceHouse();
             DetectPlaceReactor();
             DetectPlaceSolarPlant();
             DetectPlaceCoalPlant();
@@ -165,17 +162,17 @@ public class GameManager : MonoBehaviour
             {
                 buttons.isMoving = false;
                 buttons.Invoke(nameof(buttons.FinishTreeMove), 0.1f);
-                buttons.buildingInMovement = "";
+                buttons.houseInMovement = "";
             }
             else
             {
                 statManager.treeCount--;
             }
         }
-    } 
-    public void DetectPlaceBuilding()
+    }
+    public void DetectPlaceHouse()
     {
-        if (buildingToPlace == null)
+        if (houseToPlace == null)
         {
             return;
         }
@@ -193,24 +190,24 @@ public class GameManager : MonoBehaviour
         if (nearestTile && !nearestTile.isOccupied && shortestDistance < 2)
         {
             Vector3 positionToPlace = nearestTile.transform.position;
-            var placedBuilding = Instantiate(buildingToPlace, positionToPlace, Quaternion.identity);
-            nearestTile.currentBuilding = placedBuilding;
-            placedBuilding.placedTile = nearestTile;
+            var placedHouse = Instantiate(houseToPlace, positionToPlace, Quaternion.identity);
+            nearestTile.currentHouse = placedHouse;
+            placedHouse.placedTile = nearestTile;
             nearestTile.isOccupied = true;
-            buildingToPlace = null;
+            houseToPlace = null;
             customCursor.gameObject.SetActive(false);
             Cursor.visible = true;
             buttons.isPlacing = false;
-            buildings.Insert(0, placedBuilding);
+            houses.Insert(0, placedHouse);
             if (buttons.isMoving)
             {
                 buttons.isMoving = false;
-                buttons.Invoke(nameof(buttons.FinishBuildingMove), 0.1f);
-                buttons.buildingInMovement = "";
+                buttons.Invoke(nameof(buttons.FinishHouseMove), 0.1f);
+                buttons.houseInMovement = "";
             }
             else
             {
-                statManager.buildingCount--;
+                statManager.houseCount--;
             }
         }
     }
@@ -262,7 +259,7 @@ public class GameManager : MonoBehaviour
             {
                 buttons.isMoving = false;
                 buttons.Invoke(nameof(buttons.FinishReactorMove), 0.1f);
-                buttons.buildingInMovement = "";
+                buttons.houseInMovement = "";
             }
             else
             {
@@ -303,7 +300,7 @@ public class GameManager : MonoBehaviour
             {
                 buttons.isMoving = false;
                 buttons.Invoke(nameof(buttons.FinishSolarPlantMove), 0.1f);
-                buttons.buildingInMovement = "";
+                buttons.houseInMovement = "";
             }
             else
             {
@@ -344,7 +341,7 @@ public class GameManager : MonoBehaviour
             {
                 buttons.isMoving = false;
                 buttons.Invoke(nameof(buttons.FinishCoalPlantMove), 0.1f);
-                buttons.buildingInMovement = "";
+                buttons.houseInMovement = "";
             }
             else
             {
